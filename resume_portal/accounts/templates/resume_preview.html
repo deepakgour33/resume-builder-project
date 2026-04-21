@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Premium Resume Preview</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: radial-gradient(
+          circle at top right,
+          #312e81,
+          #0f172a,
+          #020617
+        );
+        min-height: 100vh;
+        padding: 40px;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      .resume {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .left {
+        background: #1e293b;
+        color: white;
+        padding: 40px 30px;
+      }
+
+      .profile {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 25px;
+        border: 4px solid #60a5fa;
+        background: #334155;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+      }
+
+      .profile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .name {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .role {
+        text-align: center;
+        color: #93c5fd;
+        margin-bottom: 25px;
+      }
+
+      .left-section {
+        margin-bottom: 28px;
+      }
+
+      .left-section h5 {
+        color: #60a5fa;
+        font-weight: 600;
+        margin-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 8px;
+      }
+
+      .right {
+        padding: 45px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      .section h4 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1e293b;
+        border-bottom: 2px solid #60a5fa;
+        padding-bottom: 8px;
+        margin-bottom: 14px;
+      }
+
+      .text {
+        color: #475569;
+        line-height: 1.8;
+        white-space: pre-line;
+      }
+
+      .top-actions {
+        max-width: 1000px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+      }
+      @media print {
+        body {
+          background: white !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        .top-actions {
+          display: none !important;
+        }
+
+        .resume {
+          max-width: 100% !important;
+          width: 100% !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+          margin: 0 !important;
+          page-break-inside: avoid;
+        }
+
+        .left {
+          padding: 20px !important;
+        }
+
+        .right {
+          padding: 25px !important;
+        }
+
+        .section {
+          margin-bottom: 18px !important;
+        }
+
+        .section h4 {
+          font-size: 18px !important;
+          margin-bottom: 8px !important;
+        }
+
+        .text {
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+        }
+
+        .name {
+          font-size: 24px !important;
+        }
+
+        .role {
+          font-size: 14px !important;
+        }
+
+        .left-section {
+          margin-bottom: 18px !important;
+        }
+
+        p {
+          margin-bottom: 8px !important;
+        }
+      }
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+
+        .resume {
+          grid-template-columns: 1fr;
+        }
+
+        .left {
+          padding: 25px;
+        }
+
+        .right {
+          padding: 25px;
+        }
+
+        .name {
+          font-size: 24px;
+        }
+
+        .section h4 {
+          font-size: 18px;
+        }
+
+        .profile {
+          width: 100px;
+          height: 100px;
+        }
+
+        .top-actions {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .top-actions .btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-actions">
+      <a href="/dashboard/" class="btn btn-dark">⬅ Back Dashboard</a>
+
+      <div>
+        <button onclick="window.print()" class="btn btn-primary">
+          📥 Download PDF
+        </button>
+        <button onclick="window.print()" class="btn btn-success">
+          🖨 Print
+        </button>
+      </div>
+    </div>
+
+    <div class="resume">
+      <!-- LEFT -->
+      <div class="left">
+        <div class="profile">
+          {% if resume.photo %}
+          <img src="{{ resume.photo.url }}" alt="Profile" />
+          {% else %} {{ resume.full_name|slice:":2"|upper }} {% endif %}
+        </div>
+
+        <div class="name">{{ resume.full_name }}</div>
+        <div class="role">{{ resume.skills }}</div>
+
+        <div class="left-section">
+          <h5>📞 Contact</h5>
+          <p>{{ resume.email }}</p>
+          <p>{{ resume.phone }}</p>
+          <p>{{ resume.location }}</p>
+        </div>
+
+        <div class="left-section">
+          <h5>🛠 Skills</h5>
+          <div class="text">{{ resume.skills }}</div>
+        </div>
+
+        <div class="left-section">
+          <h5>🌐 Languages</h5>
+          <div class="text">{{ resume.languages }}</div>
+        </div>
+
+        <div class="left-section">
+          <h5>💪 Strengths</h5>
+          <div class="text">{{ resume.strengths }}</div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <div class="section">
+          <h4>🎯 Professional Summary</h4>
+          <div class="text">{{ resume.objective }}</div>
+        </div>
+
+        <div class="section">
+          <h4>💼 Projects</h4>
+          <div class="text">{{ resume.projects }}</div>
+        </div>
+
+        <div class="section">
+          <h4>🎓 Education</h4>
+          <div class="text">{{ resume.education }}</div>
+          <p><strong>CGPA:</strong> {{ resume.cgpa }}</p>
+        </div>
+
+        <div class="section">
+          <h4>🏢 Experience</h4>
+          <div class="text">{{ resume.experience }}</div>
+        </div>
+
+        <div class="section">
+          <h4>🏆 Achievements</h4>
+          <div class="text">{{ resume.achievements }}</div>
+        </div>
+
+        <div class="section">
+          <h4>📜 Certifications</h4>
+          <div class="text">{{ resume.certifications }}</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
